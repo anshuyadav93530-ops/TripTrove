@@ -1,0 +1,9 @@
+import { CalendarDays, MapPin, Trash2, Pencil, ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { destinations } from '../data/destinations'
+import { useApp } from '../context/AppContext'
+export default function TripCard({ trip, onEdit, onDelete }) {
+  const { language } = useApp(), hi = language === 'hi'
+  const places = (trip.destinations || []).map(id => destinations.find(item => item.id === id)).filter(Boolean)
+  return <article className="trip-card"><div className="trip-cover" style={{ backgroundImage: `linear-gradient(0deg, #14221dbf, transparent 85%), url(${places[0]?.image || destinations[0].image})` }}><span className="trip-status">{hi?'आने वाली यात्रा':'UPCOMING ESCAPE'}</span><strong>{trip.name}</strong></div><div className="trip-card-content"><span className="trip-info"><MapPin size={15}/>{places.map(place => place.name).join(' · ') || (hi?'जगह चुनें':'Choose destinations')}</span><span className="trip-info"><CalendarDays size={15}/>{trip.startDate ? new Date(`${trip.startDate}T12:00:00`).toLocaleDateString(hi?'hi-IN':undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : (hi?'तारीख़ तय नहीं':'Dates to be decided')}{trip.endDate ? ` — ${new Date(`${trip.endDate}T12:00:00`).toLocaleDateString(hi?'hi-IN':undefined, { month: 'short', day: 'numeric' })}` : ''}</span><div className="trip-actions"><Link to={`/itinerary/${trip.id}`} className="text-button">{hi?'यात्रा कार्यक्रम':'Plan itinerary'} <ArrowUpRight size={15}/></Link><button className="icon-button" onClick={() => onEdit(trip)} aria-label={hi?'यात्रा संपादित करें':'Edit trip'}><Pencil size={16}/></button><button className="icon-button danger-icon" onClick={() => onDelete(trip)} aria-label={hi?'यात्रा हटाएँ':'Delete trip'}><Trash2 size={16}/></button></div></div></article>
+}

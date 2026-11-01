@@ -1,0 +1,3 @@
+import { Compass, Instagram, ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+export default function Footer() { return <footer className="site-footer"><div className="footer-top"><Link to="/" className="brand footer-brand"><span className="brand-mark"><Compass size={21}/></span><span>trip<span className="brand-accent">trove</span><small>GO A LITTLE FURTHER</small></span></Link><p>Make room for the stories you haven’t told yet.</p><Link to="/explore" className="footer-link">Find your somewhere <ArrowUpRight size={16}/></Link></div><div className="footer-bottom"><span>© 2026 Trip Trove. Made for the curious.</span><span>Collect moments, not things <Instagram size={15}/></span></div></footer> }
